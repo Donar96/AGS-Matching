@@ -1,0 +1,28 @@
+{
+  "bundesland": {},
+  "kreis": {},
+  "gemeinde": {
+    "Oldenburg": "03403000",
+    "Mülheim a.d.Ruhr": "05117000",
+    "Bad Homburg": "06434001",
+    "Clausthal": "03153018",
+    "Dessau": "15001000",
+    "Frankfurt a.d.O.": "12053000",
+    "Frankfurt a.M.": "06412000",
+    "Furtwangen": "08326017",
+    "Hennef": "05382020",
+    "Herrsching": "09188124",
+    "Köthen": "15082180",
+    "Landau": "07313000",
+    "Leer": "03457013",
+    "Ludwigshafen": "07314000",
+    "Mühlheim a. M.": "06438008",
+    "Mülheim a.d.R.": "05117000",
+    "Oberursel": "06434008",
+    "Offenbach": "06413000",
+    "Rotenburg/Hessen": "06632018",
+    "St. Augustin": "05382056",
+    "Triesdorf": "09571216",
+    "Weißenburg": "09577177"
+  }
+}

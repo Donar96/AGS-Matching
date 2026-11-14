@@ -40,6 +40,20 @@ with sqlite3.connect(gpkg_path) as conn:
         df["ebene"] = ebene
         dfs.append(df)
 
+        query = f"""
+            SELECT AGS AS ags, GEN AS name, BEZ AS bez
+            FROM "{actual_table}"
+            WHERE CAST(GF AS INTEGER) = 9
+              AND AGS NOT LIKE '00%'
+              AND (BEZ IS NULL OR BEZ != 'Küstenmeer')
+        """
+        df = pd.read_sql(query, conn)
+        df["ags"] = df["ags"].astype(str).str.strip()
+        df["ebene"] = ebene
+        dfs.append(df)
+
+ref_df = pd.concat(dfs, ignore_index=True).drop_duplicates(subset=["ags", "ebene"])
+
 ref_df = pd.concat(dfs, ignore_index=True).drop_duplicates()
 ref_df.to_csv(out_csv, index=False, encoding="utf-8")
 

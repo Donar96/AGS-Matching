@@ -37,14 +37,14 @@ def normalize_name(text: str) -> tuple[str, str | None]:
         # Standalone "Stadt" (z. B. "Karlsruhe, Stadt"), trifft nicht auf "Darmstadt" o. Ä. zu
         admin_type = "stadtkreis"
 
-    # 2. Typische geografische Abkürzungen ausschreiben
+   # 2. Typische geografische Abkürzungen ausschreiben
     abbreviations = [
-        (r"\ba\.\s*d\.\b", "an der"),
-        (r"\ba\.\s*m\.\b", "am"),
-        (r"\bi\.\s*br\.\b", "im breisgau"),
-        (r"\bi\.\s*d\.\s*opf\.\b", "in der oberpfalz"),
-        (r"\bv\.\s*d\.\b", "vor der"),
-        (r"\bb\.\b", "bei"),
+        (r"\ba\.\s*d\.", "an der"),
+        (r"\ba\.\s*m\.", "am"),
+        (r"\bi\.\s*br\.(?!\w)", "im breisgau"),
+        (r"\bi\.\s*d\.\s*opf\.(?!\w)", "in der oberpfalz"),
+        (r"\bv\.\s*d\.(?!\w)", "vor der"),
+        (r"\bb\.(?!\w)", "bei"),
     ]
     for pattern, replacement in abbreviations:
         t = re.sub(pattern, replacement, t)
@@ -65,6 +65,19 @@ def normalize_name(text: str) -> tuple[str, str | None]:
         r"\buniversitätsstadt\b",
     ]
     for pattern in noise_patterns:
+        t = re.sub(pattern, " ", t)
+        
+    # 3b. Verbindende Präpositionen entfernen (gleicht "Halle an der Saale" an "Halle (Saale)" an)
+    connectors = [
+        r"\ban der\b",
+        r"\bam\b",
+        r"\bim\b",
+        r"\bin der\b",
+        r"\bvor der\b",
+        r"\bob der\b",
+        r"\bbei\b",
+    ]
+    for pattern in connectors:
         t = re.sub(pattern, " ", t)
 
     # 4. Deutsche Umlaute und ß vereinheitlichen
